@@ -1,10 +1,10 @@
-import { Link as LinkS } from 'react-scroll';
-import { Link as LinkR } from 'react-router-dom';
-import styled from 'styled-components';
+import { Link as LinkS } from "react-scroll";
+import { Link as LinkR } from "react-router-dom";
+import styled from "styled-components";
 
 export const Nav = styled.nav`
-  border: 1px solid #000 ;
-  background: ${({ scrollNav }) => (scrollNav ? '#fff' : 'transparent')};
+  border: 1px solid #000;
+  background: ${({ scrollNav }) => (scrollNav ? "#fff" : "transparent")};
   height: 80px;
   margin-top: -80px;
   display: flex;
@@ -114,5 +114,47 @@ export const NavBtnLink = styled(LinkR)`
     background: #fff;
     border: 1px solid #000;
     color: #000;
+  }
+`;
+
+export const NavBtnUser = styled.button`
+  background: #000;
+  white-space: nowrap;
+  padding: 10px 22px;
+  color: #fff;
+  font-size: 16px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    background: #fff;
+    border: 1px solid #000;
+    color: #000;
+  }
+`;
+
+export const NavItemUser = styled.li`
+  height: 80px;
+  color: #000;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 0 1rem;
+  height: 100%;
+  cursor: default;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  &.active {
+    border-bottom: 3px solid #000;
+  }
+
+  @media screen and (max-width: 768px) {
+    display: none;
   }
 `;

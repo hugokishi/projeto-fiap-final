@@ -29,7 +29,7 @@ const SignIn = () => {
         return alert("Email ou senha invalidos!");
       }
 
-      localStorage.setItem("userInfo", response.data);
+      localStorage.setItem("userInfo", JSON.stringify(response.data));
       history.push("/");
     } catch (err) {
       alert("Não foi possivel realizar seu login, tente novamente!");

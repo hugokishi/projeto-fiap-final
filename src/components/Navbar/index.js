@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Link  } from 'react-router-dom';
-import { FaBars } from 'react-icons/fa';
-import { IconContext } from 'react-icons/lib';
-import { animateScroll as scroll } from 'react-scroll';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { FaBars } from "react-icons/fa";
+import { IconContext } from "react-icons/lib";
+import { animateScroll as scroll } from "react-scroll";
 import {
   MobileIcon,
   Nav,
@@ -12,10 +12,26 @@ import {
   NavLogo,
   NavMenu,
   NavBtn,
-  NavBtnLink
-} from './NavbarElements';
+  NavBtnLink,
+  NavBtnUser,
+  NavItemUser,
+} from "./NavbarElements";
 
 const Navbar = ({ toggle }) => {
+  const [user, setUser] = useState();
+
+  React.useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    if (userInfo) {
+      setUser(userInfo);
+    }
+  }, [setUser]);
+
+  function handleLogout() {
+    localStorage.clear();
+    setUser();
+  }
+
   const [scrollNav, setScrollNav] = useState(false);
 
   const changeNav = () => {
@@ -27,7 +43,7 @@ const Navbar = ({ toggle }) => {
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', changeNav);
+    window.addEventListener("scroll", changeNav);
   }, []);
 
   const toggleHome = () => {
@@ -36,11 +52,11 @@ const Navbar = ({ toggle }) => {
 
   return (
     <>
-      <IconContext.Provider value={{ color: '#000' }}>
+      <IconContext.Provider value={{ color: "#000" }}>
         <Nav scrollNav={scrollNav}>
           <NavbarContainer>
-            <NavLogo onClick={toggleHome} to='/'>
-            HomeTherapy
+            <NavLogo onClick={toggleHome} to="/">
+              HomeTherapy
             </NavLogo>
             <MobileIcon onClick={toggle}>
               <FaBars />
@@ -48,11 +64,11 @@ const Navbar = ({ toggle }) => {
             <NavMenu>
               <NavItem>
                 <NavLinks
-                  to='about'
+                  to="about"
                   smooth={true}
                   duration={500}
                   spy={true}
-                  exact='true'
+                  exact="true"
                   offset={-80}
                 >
                   Sobre nós
@@ -60,11 +76,11 @@ const Navbar = ({ toggle }) => {
               </NavItem>
               <NavItem>
                 <NavLinks
-                  to='discover'
+                  to="discover"
                   smooth={true}
                   duration={500}
                   spy={true}
-                  exact='true'
+                  exact="true"
                   offset={-80}
                 >
                   Encontre o seu profissional
@@ -72,11 +88,11 @@ const Navbar = ({ toggle }) => {
               </NavItem>
               <NavItem>
                 <NavLinks
-                  to='services'
+                  to="services"
                   smooth={true}
                   duration={500}
                   spy={true}
-                  exact='true'
+                  exact="true"
                   offset={-80}
                 >
                   Serviços
@@ -84,20 +100,36 @@ const Navbar = ({ toggle }) => {
               </NavItem>
               <NavItem>
                 <NavLinks
-                  to='signup'
+                  to="signup"
                   smooth={true}
                   duration={500}
                   spy={true}
-                  exact='true'
+                  exact="true"
                   offset={-80}
                 >
                   Inscreva-se
                 </NavLinks>
               </NavItem>
             </NavMenu>
-            <NavBtn>
-              <NavBtnLink to='/signin'>Entrar</NavBtnLink>
-            </NavBtn>
+
+            {!user && (
+              <>
+                <NavBtn>
+                  <NavBtnLink to="/signin">Entrar</NavBtnLink>
+                </NavBtn>
+              </>
+            )}
+
+            {user && (
+              <>
+                <NavItemUser>Bem vindo(a), {user?.user?.name}</NavItemUser>
+                <NavBtn>
+                  <NavBtnUser type="submit" onClick={handleLogout}>
+                    Sair
+                  </NavBtnUser>
+                </NavBtn>
+              </>
+            )}
           </NavbarContainer>
         </Nav>
       </IconContext.Provider>
